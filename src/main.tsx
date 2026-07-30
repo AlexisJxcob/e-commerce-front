@@ -1,12 +1,30 @@
-import { useState } from 'react';
-import type { Producto, ItemCarrito } from './types';
-import { ShoppingBag, X, Plus, Minus } from 'lucide-react';
+import {useState} from 'react';
+import type {Producto, ItemCarrito} from './types';
+import {ShoppingBag, X, Plus, Minus} from 'lucide-react';
 
 // 1. Datos simulados (Mock Data con estética Zen)
 const PRODUCTOS_MOCK: Producto[] = [
-    { id: 1, nombre: "Vela de Soja Sándalo", precio: 24, descripcion: "Cera natural con notas de madera y calma.", imagen: "https://unsplash.com" },
-    { id: 2, nombre: "Tetera de Cerámica Matcha", precio: 48, descripcion: "Hecha a mano en arcilla texturizada gris.", imagen: "https://unsplash.com" },
-    { id: 3, nombre: "Incienso de Cedro Japonés", precio: 18, descripcion: "20 varillas de purificación y enfoque.", imagen: "https://unsplash.com" }
+    {
+        id: 1,
+        nombre: "Vela de Soja Sándalo",
+        precio: 24,
+        descripcion: "Cera natural con notas de madera y calma.",
+        imagen: "https://unsplash.com"
+    },
+    {
+        id: 2,
+        nombre: "Tetera de Cerámica Matcha",
+        precio: 48,
+        descripcion: "Hecha a mano en arcilla texturizada gris.",
+        imagen: "https://unsplash.com"
+    },
+    {
+        id: 3,
+        nombre: "Incienso de Cedro Japonés",
+        precio: 18,
+        descripcion: "20 varillas de purificación y enfoque.",
+        imagen: "https://unsplash.com"
+    }
 ];
 
 export default function App() {
@@ -20,10 +38,10 @@ export default function App() {
             const existe = prev.find(item => item.producto.id === producto.id);
             if (existe) {
                 return prev.map(item =>
-                    item.producto.id === producto.id ? { ...item, cantidad: item.cantidad + 1 } : item
+                    item.producto.id === producto.id ? {...item, cantidad: item.cantidad + 1} : item
                 );
             }
-            return [...prev, { producto, cantidad: 1 }];
+            return [...prev, {producto, cantidad: 1}];
         });
     };
 
@@ -31,7 +49,7 @@ export default function App() {
         setCarrito(prev => prev.map(item => {
             if (item.producto.id === id) {
                 const nuevaCantidad = accion === 'incrementar' ? item.cantidad + 1 : item.cantidad - 1;
-                return { ...item, cantidad: nuevaCantidad };
+                return {...item, cantidad: nuevaCantidad};
             }
             return item;
         }).filter(item => item.cantidad > 0)); // Filtro backend: si baja de 1, se remueve
@@ -50,9 +68,10 @@ export default function App() {
                         onClick={() => setCarritoAbierto(true)}
                         className="relative p-2 text-[#4A4A4A] hover:text-black transition-colors"
                     >
-                        <ShoppingBag strokeWidth={1.2} size={22} />
+                        <ShoppingBag strokeWidth={1.2} size={22}/>
                         {carrito.length > 0 && (
-                            <span className="absolute -top-1 -right-1 bg-[#4A5D4E] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-light">
+                            <span
+                                className="absolute -top-1 -right-1 bg-[#4A5D4E] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-light">
                 {carrito.reduce((sum, item) => sum + item.cantidad, 0)}
               </span>
                         )}
@@ -91,12 +110,15 @@ export default function App() {
             {/* CARRITO LATERAL (SIDEBAR) */}
             {carritoAbierto && (
                 <div className="fixed inset-0 z-50 flex justify-end">
-                    <div className="absolute inset-0 bg-black/10 backdrop-blur-xs" onClick={() => setCarritoAbierto(false)} />
-                    <div className="relative w-full max-w-md bg-[#FDFBF7] h-full shadow-2xl flex flex-col p-8 z-10 border-l border-[#EAE6DF]">
+                    <div className="absolute inset-0 bg-black/10 backdrop-blur-xs"
+                         onClick={() => setCarritoAbierto(false)}/>
+                    <div
+                        className="relative w-full max-w-md bg-[#FDFBF7] h-full shadow-2xl flex flex-col p-8 z-10 border-l border-[#EAE6DF]">
                         <div className="flex justify-between items-center mb-8">
                             <h2 className="text-sm uppercase tracking-widest font-medium">Tu Carrito</h2>
-                            <button onClick={() => setCarritoAbierto(false)} className="text-[#8C8C8C] hover:text-black">
-                                <X strokeWidth={1} size={20} />
+                            <button onClick={() => setCarritoAbierto(false)}
+                                    className="text-[#8C8C8C] hover:text-black">
+                                <X strokeWidth={1} size={20}/>
                             </button>
                         </div>
 
@@ -106,16 +128,23 @@ export default function App() {
                             ) : (
                                 carrito.map(item => (
                                     <div key={item.producto.id} className="flex gap-4 border-b border-[#F5F2EB] pb-4">
-                                        <img src={item.producto.imagen} className="w-16 h-20 object-cover bg-[#F5F2EB] rounded-xs grayscale-[20%]" />
+                                        <img src={item.producto.imagen} alt={item.producto.nombre}
+                                             className="w-16 h-20 object-cover bg-[#F5F2EB] rounded-xs grayscale-[20%]"/>
                                         <div className="flex-grow flex flex-col justify-between">
                                             <div>
                                                 <h4 className="text-sm font-normal">{item.producto.nombre}</h4>
                                                 <p className="text-xs text-[#8C8C8C] font-light">${item.producto.precio} c/u</p>
                                             </div>
                                             <div className="flex items-center gap-3">
-                                                <button onClick={() => modificarCantidad(item.producto.id, 'decrementar')} className="p-1 border border-[#EAE6DF] hover:border-[#1A1A1A] rounded-xs"><Minus size={12} /></button>
+                                                <button
+                                                    onClick={() => modificarCantidad(item.producto.id, 'decrementar')}
+                                                    className="p-1 border border-[#EAE6DF] hover:border-[#1A1A1A] rounded-xs">
+                                                    <Minus size={12}/></button>
                                                 <span className="text-xs font-light">{item.cantidad}</span>
-                                                <button onClick={() => modificarCantidad(item.producto.id, 'incrementar')} className="p-1 border border-[#EAE6DF] hover:border-[#1A1A1A] rounded-xs"><Plus size={12} /></button>
+                                                <button
+                                                    onClick={() => modificarCantidad(item.producto.id, 'incrementar')}
+                                                    className="p-1 border border-[#EAE6DF] hover:border-[#1A1A1A] rounded-xs">
+                                                    <Plus size={12}/></button>
                                             </div>
                                         </div>
                                     </div>
@@ -129,7 +158,8 @@ export default function App() {
                                     <span className="text-xs uppercase tracking-widest font-light">Subtotal</span>
                                     <span className="text-lg font-normal">${totalCarrito}</span>
                                 </div>
-                                <button className="w-full py-3 bg-[#1A1A1A] text-white text-xs uppercase tracking-widest hover:bg-[#2C2C2C] transition-colors rounded-sm">
+                                <button
+                                    className="w-full py-3 bg-[#1A1A1A] text-white text-xs uppercase tracking-widest hover:bg-[#2C2C2C] transition-colors rounded-sm">
                                     Proceder al pago
                                 </button>
                             </div>
