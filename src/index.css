@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+body {
+    background-color: #FDFBF7; /* El color crema/hueso Zen */
+    color: #2C2C2C; /* El color de texto suave */
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
