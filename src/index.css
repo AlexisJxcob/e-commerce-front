@@ -1,8 +1,30 @@
 @import "tailwindcss";
 
 body {
-    background-color: #FDFBF7; /* El color crema/hueso Zen */
-    color: #2C2C2C; /* El color de texto suave */
+    background-color: #FDFBF7;
+    color: #2C2C2C;
     font-family: ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+}
+
+/* Animaciones Zen Personalizadas */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Suavizar transiciones globales */
+* {
+    transition-property: color, background-color, border-color;
+    transition-duration: 200ms;
 }
